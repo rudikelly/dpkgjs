@@ -1,0 +1,14 @@
+{
+  "name": "dpkgjs",
+  "version": "1.0.2",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dpkg.js"
+  },
+  "author": "rudi kelly",
+  "license": "MIT",
+  "dependencies": {
+    "ar": "0.0.1",
+    "tar": "^4.4.8"
+  }
+}
