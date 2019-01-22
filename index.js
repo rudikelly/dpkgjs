@@ -25,7 +25,6 @@ class dpkg {
       var count = 0;
       for (let i = 0; i < debs.length; i++) {
         const deb = debs[i];
-        console.log(deb);
         const debPath = path.join(dir, deb);
         this.getControl(debPath, controlData => {
           packages.push(controlData);
