@@ -79,6 +79,35 @@ class dpkg {
     });
   }
 
+  static getControlFromFile(file, callback) {
+    var control = '';
+    const controlArchive = new ar.Archive(data)
+      .getFiles()
+      .filter(file => file.name() === 'control.tar.gz')[0];
+    var controlStream = new stream.Duplex();
+    controlStream.push(controlArchive.fileData());
+    controlStream.push(null);
+    controlStream.pipe(
+      tar.x({cwd: os.tmpdir()}, ))
+      .on('entry', entry => {
+        if (entry.path == './control') {
+          control = entry.buffer.head.value.toString();
+        }
+      })
+      .on('end', () => {
+        if (!control) {
+          throw new Error('Failed to find control file');
+        }
+        this.parseControl(control, parsedControl => {
+          this.generateHashes(data, hashes => {
+            const finalControl = Object.assign({}, parsedControl, hashes);
+            callback(finalControl);
+          });
+        });
+      });
+    }
+  }
+
   /**
    * Parses a raw control file.
    *
