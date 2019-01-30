@@ -79,7 +79,7 @@ class dpkg {
     });
   }
 
-  static getControlFromFile(file, callback) {
+  static getControlFromFile(data, callback) {
     var control = '';
     const controlArchive = new ar.Archive(data)
       .getFiles()
@@ -105,7 +105,6 @@ class dpkg {
           });
         });
       });
-    }
   }
 
   /**
